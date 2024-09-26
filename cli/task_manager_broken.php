@@ -26,13 +26,19 @@ class Task {
     }
 }
 
-$tasks = [];
+$tasks = [
+    1 => ['title' => 'Iziet ara', 'description' => 'Es iziesu ara'],
+    2 => ['title' => 'Nejiet ara', 'description' => 'Es Nejiesu ara'],
+    3 => ['title' => 'Iet prom', 'description' => 'Es iesu prom'],
+        
+];
 
 function displayAllTasks($tasks) {
     if (empty($tasks)) {
         echo "No tasks available.\n";
     } else {
         foreach ($tasks as $task) {
+            echo($tasks);
         }
     }
 }
@@ -45,7 +51,7 @@ function createTask(&$tasks) {
     $lastKey = key($tasks);
     $id = $lastKey + 1;
 
-    $tasks[$id] = new Task();
+    $tasks[$id] = new Task($title, $description);
     echo "Task Created.\n";
 }
 
@@ -54,6 +60,7 @@ function updateTask(&$tasks) {
 
     if (isset($tasks[$id])) {
         $newTitle = readline("Enter New Title: ");
+        $newDescription = readline("Enter new Description");
 
         $tasks[$id]->setTitle($newTitle);
         $tasks[$id]->setDescription($newDescription);
@@ -87,16 +94,16 @@ while (true) {
 
     switch ($choice) {
         case 1:
-            createTask($tasks);
+            displayAllTasks($tasks);
             break;
         case 2:
-            displayAllTasks($tasks);
+            createTask($tasks);
             break;
         case 3:
             updateTask($tasks);
             break;
         case 4:
-            deleteTasks();
+            deleteTasks($tasks);
             break;
         case 5:
             echo "Exiting the application. Goodbye!\n";
@@ -105,5 +112,9 @@ while (true) {
             print_r($tasks);
         default:
             echo "Invalid option. Please choose again.\n";
+    }
+    if ($choice = 5){
+        break;
+        // kautka jaendo serveris
     }
 }
